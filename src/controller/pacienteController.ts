@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import pacienteService from '../service/PacienteService'
+import pacienteService from '../service/pacienteService'
 import { IPaciente } from '../model/IPaciente'
 
 export const createPaciente: RequestHandler = async (req, res) => {
