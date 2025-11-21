@@ -1,10 +1,9 @@
-import { app, port } from './app';
-import errorHanddler from './middleware/errorHanddler';
+import { app, port } from './app'
 
 const main = () => {
-  app.listen(port);
-  app.use(errorHanddler);
-  console.log('🚀 Servidor corriendo en http://localhost:' + port);
-};
+  app.listen(port, () => {
+    console.log('🚀 Servidor corriendo en http://localhost:' + port)
+  })
+}
 
-main();
+main()
