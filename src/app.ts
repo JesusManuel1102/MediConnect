@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import showRequests from './middleware/showRequest'
 import cors from 'cors'
+import path from 'path'
 import authRouter from './routes/authRoutes'
 import testRoutes from './routes/testRoutes'
 import userRoutes from './routes/userRoutes'
@@ -19,6 +20,9 @@ app.use(cors({
   exposedHeaders: ['token'],
   credentials: true
 }))
+
+// Servir archivos estáticos desde la carpeta public
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.get('/ping', (_req: Request, res: Response) => {
   res.send({ message: 'pong' })
@@ -41,6 +45,11 @@ app.use('/dss', dssRoutes)
 
 // Rutas de prueba
 app.use('/test', testRoutes)
+
+// Ruta para servir el HTML principal
+app.get('/', (_req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+})
 
 // Middleware de manejo de errores (DEBE IR AL FINAL, después de todas las rutas)
 app.use(errorHanddler)

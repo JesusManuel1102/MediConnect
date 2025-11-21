@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediConnect - Sistema de Gestión de Citas</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen active">
+            <div class="login-container">
+                <h1>MediConnect</h1>
+                <h2>Sistema de Gestión de Citas Médicas</h2>
+                <form id="loginForm">
+                    <input type="text" id="username" placeholder="Usuario" required>
+                    <input type="password" id="password" placeholder="Contraseña" required>
+                    <button type="submit">Iniciar Sesión</button>
+                </form>
+                <div id="loginError" class="error hidden"></div>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboardScreen" class="screen">
+            <nav class="navbar">
+                <h1>MediConnect</h1>
+                <div class="user-info">
+                    <span id="userDisplay"></span>
+                    <button id="logoutBtn">Cerrar Sesión</button>
+                </div>
+            </nav>
+
+            <div class="container">
+                <aside class="sidebar">
+                    <button class="menu-item active" data-section="dashboard">Dashboard</button>
+                    <button class="menu-item" data-section="pacientes">Pacientes</button>
+                    <button class="menu-item" data-section="citas">Citas</button>
+                    <button class="menu-item" data-section="reportes">Reportes</button>
+                </aside>
+
+                <main class="content">
+                    <!-- Dashboard Section -->
+                    <section id="dashboard" class="section active">
+                        <h2>Dashboard Ejecutivo</h2>
+                        <div id="dashboardStats" class="stats-grid"></div>
+                    </section>
+
+                    <!-- Pacientes Section -->
+                    <section id="pacientes" class="section">
+                        <h2>Gestión de Pacientes</h2>
+                        <div class="actions">
+                            <button id="btnNuevoPaciente" class="btn-primary">Nuevo Paciente</button>
+                            <input type="text" id="searchPacientes" placeholder="Buscar paciente...">
+                        </div>
+                        <div id="pacientesList" class="list"></div>
+                    </section>
+
+                    <!-- Citas Section -->
+                    <section id="citas" class="section">
+                        <h2>Gestión de Citas</h2>
+                        <div class="actions">
+                            <button id="btnNuevaCita" class="btn-primary">Nueva Cita</button>
+                            <input type="date" id="filterFecha">
+                        </div>
+                        <div id="citasList" class="list"></div>
+                    </section>
+
+                    <!-- Reportes Section -->
+                    <section id="reportes" class="section">
+                        <h2>Reportes y Análisis</h2>
+                        <div class="reports-grid">
+                            <button class="report-card" data-report="tendencias">Tendencias de Demanda</button>
+                            <button class="report-card" data-report="desempeno">Desempeño por Doctor</button>
+                            <button class="report-card" data-report="prioritarios">Casos Prioritarios</button>
+                            <button class="report-card" data-report="ausentismo">Análisis de Ausentismo</button>
+                        </div>
+                        <div id="reporteOutput"></div>
+                    </section>
+                </main>
+            </div>
+        </div>
+
+        <!-- Modal para Nuevo Paciente -->
+        <div id="modalPaciente" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Nuevo Paciente</h2>
+                <form id="formPaciente">
+                    <input type="text" name="nombre" placeholder="Nombre" required>
+                    <input type="text" name="apellido" placeholder="Apellido" required>
+                    <input type="text" name="cedula" placeholder="Cédula" required>
+                    <input type="tel" name="telefono" placeholder="Teléfono" required>
+                    <input type="email" name="email" placeholder="Email (opcional)">
+                    <input type="date" name="fechaNacimiento" required>
+                    <input type="text" name="direccion" placeholder="Dirección (opcional)">
+                    <button type="submit">Guardar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para Nueva Cita -->
+        <div id="modalCita" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Nueva Cita</h2>
+                <form id="formCita">
+                    <select name="pacienteId" required>
+                        <option value="">Seleccionar Paciente</option>
+                    </select>
+                    <select name="doctorId" required>
+                        <option value="">Seleccionar Doctor</option>
+                    </select>
+                    <input type="date" name="fecha" required>
+                    <input type="time" name="hora" required>
+                    <input type="text" name="especialidad" placeholder="Especialidad" required>
+                    <select name="tipoCita" required>
+                        <option value="">Tipo de Cita</option>
+                        <option value="prioritaria">Prioritaria</option>
+                        <option value="control">Control</option>
+                        <option value="consulta_externa">Consulta Externa</option>
+                        <option value="primera_vez">Primera Vez</option>
+                    </select>
+                    <textarea name="motivo" placeholder="Motivo de la consulta"></textarea>
+                    <input type="text" name="consultorio" placeholder="Consultorio">
+                    <button type="submit">Agendar Cita</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
