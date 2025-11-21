@@ -12,8 +12,58 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  username  String  @unique
-  role      String
-  password  String 
+  id           Int            @id @default(autoincrement())
+  username     String         @unique
+  role         String         // admin, doctor, recepcionista, gerente
+  password     String
+  especialidad String?        // Solo para doctores
+  createdAt    DateTime       @default(now())
+  citas        Cita[]         @relation("DoctorCitas")
+}
+
+model Paciente {
+  id              Int      @id @default(autoincrement())
+  nombre          String
+  apellido        String
+  cedula          String   @unique
+  telefono        String
+  email           String?
+  fechaNacimiento DateTime
+  direccion       String?
+  createdAt       DateTime @default(now())
+  citas           Cita[]
+}
+
+model Cita {
+  id               Int      @id @default(autoincrement())
+  pacienteId       Int
+  paciente         Paciente @relation(fields: [pacienteId], references: [id])
+  doctorId         Int
+  doctor           User     @relation("DoctorCitas", fields: [doctorId], references: [id])
+  fecha            DateTime
+  hora             String
+  especialidad     String
+  tipoCita         String   // prioritaria, control, consulta_externa, primera_vez
+  estado           String   @default("programada") // programada, completada, cancelada, no_asistio
+  motivo           String?
+  observaciones    String?
+  consultorio      String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Especialidad {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @unique
+  descripcion String?
+  activa      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Consultorio {
+  id        Int      @id @default(autoincrement())
+  numero    String   @unique
+  ubicacion String?
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
 }
